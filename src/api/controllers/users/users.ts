@@ -56,7 +56,7 @@ router.patch("/", async (req: Request, res: Response) => {
     }
 
     return res.status(204).send();
-  } catch (err) {
+  } catch (err: any) {
     return res.status(400).json({
       status: 400,
       error: "Bad request",

@@ -38,6 +38,18 @@ services:
         ports:
             - 6379:6379
 
+    chrome:
+        container_name: "chrome"
+        image: browserless/chrome
+        networks:
+            - payload
+        environment:
+            - MAX_CONCURRENT_SESSIONS=10
+            - PORT=9090
+        ports: 
+            - 9090:9090
+        restart: always
+
     payload:
         build: .
         container_name: "payload"
@@ -55,6 +67,7 @@ services:
         links:
             - mongo
             - redis
+            - chrome
 
 volumes:
     mongo: ~

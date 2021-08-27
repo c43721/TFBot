@@ -4,21 +4,28 @@ import { EmbedColors } from "../lib/misc/colors";
 import { Client } from "../lib/types";
 
 async function handleEvent(client: Client, error: Error) {
-    const channel = client.channels.cache.get(config.logging.errorChannel) as TextChannel;
-    if (!channel) return;
+  if (!config.logging.errorChannel) return;
 
-    await channel.send({
-        embed: {
-            color: EmbedColors.RED,
-            timestamp: new Date(),
-            title: "Error",
-            description: error.stack
-                ? `\`\`\`x86asm\n${error.stack}\n\`\`\``
-                : `\`${error.toString()}\``,
-        },
-    });
+  const channel = (await client.channels.fetch(
+    config.logging.errorChannel
+  )) as TextChannel;
+
+  if (!channel) return;
+
+  await channel.send({
+    embeds: [
+      {
+        color: EmbedColors.RED,
+        timestamp: new Date(),
+        title: "Error",
+        description: error.stack
+          ? `\`\`\`x86asm\n${error.stack}\n\`\`\``
+          : `\`${error.toString()}\``,
+      },
+    ],
+  });
 }
 
 export = {
-    run: handleEvent,
+  run: handleEvent,
 };

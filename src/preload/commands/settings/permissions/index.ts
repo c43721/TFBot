@@ -19,7 +19,7 @@ export default class PermissionsAdjust extends Command {
             ],
             undefined,
             undefined,
-            ["text"],
+            ["GUILD_TEXT"],
             undefined,
             undefined,
             ["settings"]

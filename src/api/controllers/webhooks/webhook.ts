@@ -95,7 +95,7 @@ router.post("/guilds/:guildId", checkAuth, checkServers, async (req, res) => {
 
   const isChannelInGuild = await client.channels.fetch(channelId);
 
-  if (!isChannelInGuild || isChannelInGuild.type !== "text") {
+  if (!isChannelInGuild || isChannelInGuild.type !== "GUILD_TEXT") {
     return res.status(400).json({ status: 400, message: "Bad request" });
   }
 

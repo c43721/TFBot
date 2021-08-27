@@ -17,11 +17,11 @@ router.get("/commands", (req: Request, res: Response) => {
 	res.json({
 		commands: {
 			count: client.commands.filter(command => !command.requiresRoot).size,
-			data: client.commands.filter(command => !command.requiresRoot).array()
+			data: [...client.commands.filter(command => !command.requiresRoot).values()]
 		},
 		autoResponses: {
 			count: client.autoResponses.size,
-			data: client.autoResponses.array()
+			data: [...client.autoResponses.values()]
 		}
 	});
 });

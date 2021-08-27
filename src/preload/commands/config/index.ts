@@ -25,7 +25,7 @@ export default class Config extends Command {
             ],
             undefined,
             undefined,
-            ["dm"],
+            ["DM"],
             undefined,
             {
                 "notifications": new NotificationsCommand()

@@ -28,7 +28,7 @@ export default class Settings extends Command {
             ],
             undefined,
             ["ADMINISTRATOR"],
-            ["text"],
+            ["GUILD_TEXT"],
             undefined,
             {
                 permissions: new PermissionCommand(),

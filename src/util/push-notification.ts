@@ -33,7 +33,7 @@ export async function pushNotification(client: Client, id: string, level: number
     }
 
     try {
-        await discordUser.send(embed);
+        await discordUser.send({ embeds: [embed] });
     } catch (err) {
         return false;
     }

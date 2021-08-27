@@ -38,14 +38,14 @@ export default class Translate extends Command {
 		try {
 			const [botchedPhrase] = await translator.translate(phrase, "en");
 
-			let embed = new MessageEmbed();
+			const embed = new MessageEmbed();
 			embed.setAuthor(msg.author.tag, msg.author.displayAvatarURL());
 			embed.setColor(PayloadColors.USER);
 			embed.setDescription(lang.translate_embeddesc.replace("%translated", botchedPhrase));
 			embed.setTitle(lang.translate_embedtitle);
 			embed.setFooter(lang.translate_embedfooter);
 
-			await msg.channel.send(embed);
+			await msg.channel.send({embeds: [embed]});
 			return true;
 		} catch (err) {
 			return await this.fail(msg, lang.translate_error);

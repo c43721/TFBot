@@ -25,7 +25,7 @@ export async function handleCommand(client: Client, msg: Message): Promise<Boole
 
     if (!executableCommand.zones.includes(msg.channel.type)) return false;
 
-    if (msg.channel.type == "text") {
+    if (msg.channel.type === "GUILD_TEXT") {
         let serverManager = client.serverManager;
         let server = await serverManager.getServer(msg.guild.id);
         let commandRestrictions = server.getCommandRestrictions(msg.channel.id);
@@ -42,13 +42,12 @@ export async function handleCommand(client: Client, msg: Message): Promise<Boole
 
     try {
         await executableCommand.run(client, msg);
-        client.logger.info(`User ${msg.author.id}/${msg.author.tag} used command ${executableCommand.name}.`);
         client.emit("log", (`User ${msg.author.id}/${msg.author.tag} used command ${executableCommand.name} in ${(msg.guild) ? `guild ${msg.guild.id}/${msg.guild.name}` : "dms"}.`));
     } catch (err) {
+        console.error(err);
         client.logger.error(`Error while executing command ${command}\n${err}`);
-        client.emit("error", err);
+        client.emit("error", err as Error);
     }
 
-    msg.channel.stopTyping(true);
     return true;
 }

@@ -24,7 +24,7 @@ export default class PushCart extends Command {
             ],
             undefined,
             undefined,
-            ["text"],
+            ["GUILD_TEXT"],
             undefined,
             {
                 leaderboard: new LeaderboardCommand(),

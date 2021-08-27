@@ -5,20 +5,25 @@ import config from "../config";
 type EventType = "STARTED";
 
 async function handleEvent(client: Client, type: EventType) {
-    const channel = client.channels.cache.get(config.logging.eventChannel) as TextChannel;
-    if (!channel) return;
+  if (!config.logging.eventChannel) return;
 
-    await channel.send({
-        embed: {
-            color: EmbedColors.DARK_ORANGE,
-            timestamp: new Date(),
-            title: "Event",
-            description: `\`\`\`Event logged: ${type}\n\`\`\``,
-        },
-    });
+  const channel = (await client.channels.fetch(
+    config.logging.eventChannel
+  )) as TextChannel;
+  if (!channel) return;
+
+  await channel.send({
+    embeds: [
+      {
+        color: EmbedColors.DARK_ORANGE,
+        timestamp: new Date(),
+        title: "Event",
+        description: `\`\`\`Event logged: ${type}\n\`\`\``,
+      },
+    ],
+  });
 }
 
 export = {
-    run: handleEvent,
+  run: handleEvent,
 };
-

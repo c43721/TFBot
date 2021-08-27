@@ -20,7 +20,7 @@ export default class logsApiKey extends Command {
             ],
             undefined,
             undefined,
-            ["dm"],
+            ["DM"],
             undefined,
             undefined,
             ["config"]

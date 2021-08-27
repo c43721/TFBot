@@ -24,7 +24,7 @@ export default class RGL extends Command {
 		const lang: Language = await this.getLanguage(msg);
 		const targetUser = msg.mentions.users.first() || msg.author;
 
-		msg.channel.startTyping();
+		await msg.channel.sendTyping();
 
 		let userSteamId: string = "";
 		if (args && args.length > 0) {
@@ -63,12 +63,10 @@ export default class RGL extends Command {
 
 			embed.setURL(profile.link);
 
-			await msg.channel.send(embed);
-
-			msg.channel.stopTyping(true);
+			await msg.channel.send({ embeds: [embed] });
 
 			return true;
-		} catch (err) {
+		} catch (err: any) {
 			const { message, steamId } = err.response;
 			const embed = new MessageEmbed({
 				title: lang.rgl_embedtitle,
@@ -77,7 +75,7 @@ export default class RGL extends Command {
                 `,
 				color: EmbedColors.DARK_ORANGE
 			});
-			await msg.channel.send(embed);
+			await msg.channel.send({ embeds: [embed] });
 			return true;
 		}
 	}

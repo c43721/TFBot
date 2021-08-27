@@ -3,6 +3,7 @@ import { Client } from "../lib/types";
 import puppeteer, { ElementHandle } from "puppeteer";
 import cheerio from "cheerio";
 import { format } from "date-fns"
+import { closeBrowser, createOrConnectChrome } from "./screenshot";
 
 // Module doesn't have support for TS.
 const imageToBase64 = require("image-to-base64");
@@ -21,12 +22,8 @@ export const DISCORD_MESSAGE_HTML = `<!DOCTYPE html><html lang="en"><head><meta 
  * @param message The message object to render.
  */
 export async function renderMessage(message: Message): Promise<{ buffer: Buffer, attachments: string, links: string }> {
-    const browser = await puppeteer.launch({
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-        ]
-    });
+    const browser = await createOrConnectChrome();
+
     const page = await browser.newPage();
     await page.setViewport({
         width: 1000,
@@ -51,7 +48,7 @@ export async function renderMessage(message: Message): Promise<{ buffer: Buffer,
 
     let attachments = "";
     if (message.attachments.size > 0) {
-        attachments = `**ATTACHMENTS**\n<${message.attachments.array().map(a => a.proxyURL).join(">\n<")}>`
+        attachments = `**ATTACHMENTS**\n<${[...message.attachments.mapValues(a => a.proxyURL).values()].join(">\n<")}>`
     }
 
     let links = "";
@@ -66,7 +63,7 @@ export async function renderMessage(message: Message): Promise<{ buffer: Buffer,
         omitBackground: true
     }) as Buffer;
 
-    await browser.close();
+    await closeBrowser(browser);
 
     return {
         buffer: screenshotBuffer,
@@ -86,7 +83,7 @@ export function ensurePingChannel(client: Client, message: Message): void {
 }
 
 export function channelCacheExists(client: Client, message: Message): boolean {
-    if (message.channel.type != "text") return false;
+    if (message.channel.type !== "GUILD_TEXT") return false;
     if (!client.cache.snipe[message.guild.id]) return false;
     if (!client.cache.snipe[message.guild.id][message.channel.id]) return false;
 
@@ -115,7 +112,7 @@ export function getPingCache(client: Client, message: Message): Collection<Strin
  */
 export function handleMessageDelete(client: Client, message: Message): boolean {
     if (message.author.bot) return false;
-    if (message.channel.type != "text") return false;
+    if (message.channel.type != "GUILD_TEXT") return false;
 
     ensureChannel(client, message);
 

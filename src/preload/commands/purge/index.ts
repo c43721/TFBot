@@ -26,7 +26,7 @@ export default class Purge extends Command {
             ],
             ["SEND_MESSAGES", "MANAGE_MESSAGES"],
             ["SEND_MESSAGES", "MANAGE_MESSAGES"],
-            ["text"]
+            ["GUILD_TEXT"]
         );
     }
 
@@ -41,7 +41,7 @@ export default class Purge extends Command {
         const amount = args[0];
         const users = msg.mentions.users;
 
-        msg.channel.startTyping();
+        await msg.channel.sendTyping();
 
         await msg.delete();
 

@@ -52,7 +52,7 @@ router.get("/:guildId", checkServers, async (req: Request, res: Response) => {
   res.json({
     guild: {
       channels: channels.cache
-        .filter((c) => c.type === "text")
+        .filter((c) => c.type === "GUILD_TEXT")
         .map(({ id, name }) => ({ id, name })),
     },
     commands: {
@@ -102,7 +102,7 @@ router.patch("/:guildId", checkServers, async (req: Request, res: Response) => {
     }
 
     return res.status(204).send();
-  } catch (err) {
+  } catch (err: any) {
     return res.status(400).json({
       status: 400,
       error: "Bad request",

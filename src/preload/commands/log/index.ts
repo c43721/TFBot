@@ -27,7 +27,7 @@ export default class Log extends Command {
     const targetUser = msg.mentions.users.first() || msg.author;
     const lang: Language = await this.getLanguage(msg);
 
-    msg.channel.startTyping();
+    await msg.channel.sendTyping();
 
     const dbUser = await client.userManager.getUser(targetUser.id);
 
@@ -72,11 +72,11 @@ export default class Log extends Command {
       }
     );
 
-    await msg.channel.send(`<http://logs.tf/${logID}#${dbUser.user.steamId}>`, {
+    await msg.channel.send({
+      content: `<http://logs.tf/${logID}#${dbUser.user.steamId}>`,
       files: [screenshotBuffer],
     });
 
-    msg.channel.stopTyping(true);
     return true;
   }
 }

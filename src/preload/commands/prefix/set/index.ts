@@ -36,11 +36,11 @@ export default class Set extends Command {
         if (!newPrefix) return await this.fail(msg, lang.prefix_set_fail_nonew);
 
         const server = await client.serverManager.getServer(msg.guild.id);
-        let oldPrefix = server.getPrefixFromGuild(msg.guild.id);
+        const oldPrefix = server.getPrefixFromGuild(msg.guild.id);
 
         if (oldPrefix === newPrefix) return await this.fail(msg, lang.prefix_set_fail_oldnew);
         
-        let embed = new MessageEmbed();
+        const embed = new MessageEmbed();
         embed.setAuthor(msg.author.tag, msg.author.displayAvatarURL());
         embed.setColor(PayloadColors.ADMIN);
         embed.setDescription(lang.prefix_set_success_embeddesc.replace('%prefix', newPrefix));
@@ -51,7 +51,7 @@ export default class Set extends Command {
 
         await server.save();
 
-        await msg.channel.send(embed);
+        await msg.channel.send({ embeds: [embed]});
         return true;
     }
 }

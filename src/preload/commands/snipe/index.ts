@@ -20,7 +20,7 @@ export default class Snipe extends Command {
             ],
             ["SEND_MESSAGES", "ATTACH_FILES"],
             undefined,
-            ["text"]
+            ["GUILD_TEXT"]
         );
     }
 
@@ -41,7 +41,7 @@ export default class Snipe extends Command {
             return await this.fail(msg, lang.snipe_fail_nomsg);
         }
 
-        msg.channel.startTyping();
+        await msg.channel.sendTyping();
 
         const cache = getCache(client, msg);
 
@@ -51,7 +51,7 @@ export default class Snipe extends Command {
             return await this.fail(msg, lang.snipe_fail_max);
         }
 
-        const ids = cache.keyArray();
+        const ids = cache.keys();
         const targetMessage = cache.get(ids[max - number])!;
 
         const snipeData = await renderMessage(targetMessage);

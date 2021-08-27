@@ -1,3 +1,5 @@
+import path from "path";
+
 const config = {
     /**
      * Default prefix
@@ -23,8 +25,8 @@ const config = {
      * Static files for CSS or other assets
      */
     files: {
-        LOGS_CSS: __dirname + "/assets/dark-logs.css",
+        LOGS_CSS: path.join(__dirname, "../assets/dark-logs.css"),
     },
-};
+} as const;
 
 export default config;

@@ -1,7 +1,7 @@
-import { object, string } from "joi";
+import Joi from "joi";
 
-const logsWebhookSchema = object({
-    logsId: string().required(),
+const logsWebhookSchema = Joi.object({
+  logsId: Joi.string().required(),
 });
 
 export default logsWebhookSchema;

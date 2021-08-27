@@ -45,6 +45,6 @@ export default class ETF2LMatchPreviews extends AutoResponse {
     embed.setFooter(`Rendered by autoresponse ${this.name}`);
     embed.setTimestamp(new Date());
 
-    msg.channel.send({ embed, files: [att] });
+    msg.channel.send({ embeds: [embed], files: [att] });
   }
 }

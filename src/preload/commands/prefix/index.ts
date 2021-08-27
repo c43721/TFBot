@@ -22,7 +22,7 @@ export default class Prefix extends Command {
             ],
             undefined,
             undefined,
-            ["text"],
+            ["GUILD_TEXT"],
             undefined,
             {
                 set: new Set(),

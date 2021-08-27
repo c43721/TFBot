@@ -11,7 +11,7 @@ export default class Restrict extends Command {
             undefined,
             undefined,
             ["SEND_MESSAGES", "MANAGE_CHANNELS"],
-            ["text"]
+            ["GUILD_TEXT"]
         );
     }
 
@@ -32,7 +32,7 @@ export default class Restrict extends Command {
             if (args[i].match(/\<\#\d+\>/g)) channels.push(args[i].slice(2, -1));
             else if (args[i].toLowerCase() == "#{all}") {
                 allChannels = true;
-                channels.push(...msg.guild.channels.cache.filter(channel => channel.type == "text").map(channel => channel.id));
+                channels.push(...msg.guild.channels.cache.filter(channel => channel.type == "GUILD_TEXT").map(channel => channel.id));
             }
             else if (args[i].toLowerCase() == "{all}") {
                 allCommands = true;

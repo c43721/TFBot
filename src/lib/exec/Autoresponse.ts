@@ -20,7 +20,7 @@ export abstract class AutoResponse {
         this.description = description
         this.pattern = pattern
         this.permissions = permissions || ["SEND_MESSAGES"]
-        this.zones = zones || ["text", "dm"]
+        this.zones = zones || ["GUILD_TEXT", "DM"]
     }
 
     matchMsg(msg: Message): string {

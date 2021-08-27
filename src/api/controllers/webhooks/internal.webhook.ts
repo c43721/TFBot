@@ -38,7 +38,7 @@ router.post("/test", async (req: Request, res: Response) => {
   if (isChannel(target)) {
     // Catch permissions, other stuff
     try {
-      await target.send({ embed });
+      await target.send({ embeds: [embed] });
     } catch (err) {
       client.logger.error(err);
       return res.status(500).json({
@@ -49,7 +49,7 @@ router.post("/test", async (req: Request, res: Response) => {
     }
   } else if (isUser(target)) {
     try {
-      await target.send({ embed });
+      await target.send({ embeds: [embed] });
     } catch (err) {
       // I can't see this happening, but I do believe if we send DMs to people
       // We could get errors with that stuffs.
@@ -79,7 +79,7 @@ router.post("/logs", async (req: Request, res: Response) => {
     // I literally can never see this happening.
     if (!values?.logsId) throw new Error("No logsId present");
     logsId = values.logsId;
-  } catch (err) {
+  } catch (err: any) {
     return res.status(400).json({
       status: 400,
       error: "Bad request",
@@ -138,7 +138,7 @@ router.post("/logs", async (req: Request, res: Response) => {
   if (isChannel(target)) {
     // Catch permissions, other stuff
     try {
-      await target.send({ embed, files: [att] });
+      await target.send({ embeds: [embed], files: [att] });
     } catch (err) {
       client.logger.error(err);
       return res.status(500).json({
@@ -149,7 +149,7 @@ router.post("/logs", async (req: Request, res: Response) => {
     }
   } else if (isUser(target)) {
     try {
-      await target.send({ embed, files: [att] });
+      await target.send({ embeds: [embed], files: [att] });
     } catch (err) {
       // I can't see this happening, but I do believe if we send DMs to people
       // We could get errors with that stuffs.

@@ -46,7 +46,7 @@ export default async function checkServers(
     req.guild = await guildService.getGuildById(guildParam);
 
     return next();
-  } catch (ex) {
+  } catch (ex: any) {
     client.emit("error", ex);
     return res.status(400).json({
       status: 400,
